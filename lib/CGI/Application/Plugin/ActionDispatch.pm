@@ -174,11 +174,16 @@ CGI::Application::Plugin::ActionDispatch - Perl extension
 =head1 DESCRIPTION
 
 CGI::Application::Plugin::ActionDispatch adds attribute based support for
-parsing the PATH_INFO of the incoming request.  For those who are familiar with
-Catalyst.  The interface works very similar.
+parsing the PATH_INFO of the incoming request.  For those who are familiar with Catalyst.  The interface works very similar.
 
 This plugin is plug and play and shouldn't interrupt the default behavior of
 CGI::Application.
+
+=head1 CAVEATS
+
+Be aware though, this plugin will not likely work with other modules that use attributes.
+
+This module should work with mod_perl.  It however has not be thoroughly tested as such.  If you have used it with mod_perl please e-mail me with your experience.
 
 =head1 METHODS
 
@@ -195,12 +200,13 @@ accessible using this method.
     ...
   }
 
-The Path action also stores the left over PATH_INFO.
+The Path action will store everything after the matched path into the action args.
 
   # http://example.com/state/pa/philadelphia
   sub find_state_and_city : Path('state/') {
     my $self = shift;
     my($state, $city) = $self->action_args();
+	# $state == pa, $city == philadelphia
     ...
   }
 
@@ -212,15 +218,17 @@ The Path action also stores the left over PATH_INFO.
 
 =item Regex
 
-The Regex action is passed a regular expression.  The regular expression is run
-on the PATH_INFO sent in the request.  If capturing parentheses are used to
-extract parameters from the path.  The parameters are accesssible using the
-action_args() method.
+Regex action is used for regular expression matching against PATH_INFO.  If capturing parentheses are used; the matched parameters are accesssible using the action_args() method.
 
   Regex('^blah/foo');
 
-The Regex action either matches or it doesn't.  There are no secrets to it.  It
-does however takes priority over the Path action.
+The Regex action either matches or it doesn't.  There are no secrets to it.
+
+It is important to note Regex action takes priority.  It is assumed if a Path and Regex action both match.  The Regex action will take priority, which may not always be the outcome of least suprise, for instance:
+
+# http://example.com/music/the_clash
+sub clash : Path('/music/the_clash') {} # This is an exact match, BUT.
+sub the_class : Regex('/music/the_clash') {} # This takes priority. Beware.
 
 =item Path
 
@@ -242,17 +250,22 @@ Is basically the same thing as.
   }
 
 For those that care, the Path('products/') will be converted to the regular
-expression "^/products\/?(\/.*)$". Then split('/') is run on the captured value
-and stored in action_args().
+expression "^/products\/?(\/.*)$"; then split('/') is run on the captured value and stored in action_args().
 
 =item Runmode
 
-This attribute will take the method name and run a match on that.
+This action will take the method name and run a match on that.
+
+# http://example.com/foobar
+
+sub foobar : Runmode {}
 
 =item Default
 
 The default run mode if no match is found.  Essentially the equivalent of the
 start_mode() method.
+
+sub default_mode : Default {}
 
 =back
 
