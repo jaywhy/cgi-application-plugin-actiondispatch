@@ -87,7 +87,7 @@ Jason Yates, E<lt>jaywhy@gmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2006-2007 by Jason Yates
+Copyright (C) 2006-2008 by Jason Yates
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.8 or,

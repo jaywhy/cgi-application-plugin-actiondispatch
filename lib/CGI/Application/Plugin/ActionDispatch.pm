@@ -6,7 +6,7 @@ use Class::Inspector;
 use CGI::Application::Plugin::ActionDispatch::Attributes;
 require Exporter;
 
-our $VERSION = '0.95';
+our $VERSION = '0.96';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(action_args);
 
