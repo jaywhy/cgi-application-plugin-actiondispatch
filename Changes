@@ -1,6 +1,10 @@
 Revision history for Perl extension CGI::Application::Plugin::ActionDispatch.
 
-0.01  Tue Apr  4 12:02:13 2006
+0.97  Sep 29, 2008
+			- Attributes.pm was not included in the 0.96 distribution.
+			- Updated the documentation. 
+
+0.01  Apr 4, 2006
 	- original version; created by h2xs 1.23 with options
 		-X CGI::Application::Plugin::ActionDispatch
 
