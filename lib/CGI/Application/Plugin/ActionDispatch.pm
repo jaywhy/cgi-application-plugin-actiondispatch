@@ -6,7 +6,7 @@ use Class::Inspector;
 use CGI::Application::Plugin::ActionDispatch::Attributes;
 require Exporter;
 
-our $VERSION = '0.97';
+our $VERSION = '0.98';
 our @ISA = qw(Exporter);
 our @EXPORT = qw(action_args);
 
@@ -115,7 +115,7 @@ sub _match_type {
       # done by counting the args, and finding the Path with
       # the fewest amount of args left over. 
       if($type eq 'Path') {
-        if(defined(@args)) {
+        if(defined($args[0])) {
           $args[0] =~ s/^\///;
           @path_args = split('/', $args[0]);
         }
@@ -334,6 +334,8 @@ runmodes which match this PATH_INFO are not run.
 =head1 SEE ALSO
 
 L<CGI::Application>, L<CGI::Application::Dispatch>
+
+http://github.com/jaywhy/cgi-application-plugin-actiondispatch
 
 =head1 AUTHOR
 

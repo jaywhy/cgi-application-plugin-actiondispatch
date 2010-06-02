@@ -1,5 +1,8 @@
 Revision history for Perl extension CGI::Application::Plugin::ActionDispatch.
 
+0.98  June 2, 2010
+      - Added patch by Alex Bowley fixes a bug if there are no "action args" for a path.
+
 0.97  Sep 29, 2008
 			- Attributes.pm was not included in the 0.96 distribution.
 			- Updated the documentation. 
