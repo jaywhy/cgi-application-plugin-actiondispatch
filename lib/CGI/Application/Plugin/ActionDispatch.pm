@@ -115,7 +115,7 @@ sub _match_type {
       # done by counting the args, and finding the Path with
       # the fewest amount of args left over. 
       if($type eq 'Path') {
-        if(@args) {
+        if(defined(@args)) {
           $args[0] =~ s/^\///;
           @path_args = split('/', $args[0]);
         }
