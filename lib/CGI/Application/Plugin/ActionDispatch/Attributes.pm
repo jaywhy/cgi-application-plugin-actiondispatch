@@ -9,7 +9,7 @@ our $VERSION = '0.1';
 my @attributes;
 my %attr_handlers;
 
-my $init = 1;
+my %inited; # Allow multiple CGI::Applications to be inited separately in mod_perl enivironment
 
 # MODIFY_CODE_ATTRIBUTES needs to be in the inheritance tree.
 push @CGI::Application::ISA, 'CGI::Application::Plugin::ActionDispatch::Attributes'
@@ -39,16 +39,16 @@ sub MODIFY_CODE_ATTRIBUTES {
 }
 
 sub init {
-	return unless $init; # Initialize only once
-	
+	my $class;
 	foreach my $attr (@attributes) {
-		my $class	= $attr->[0];
+		$class	= $attr->[0];
+		next if( exists $inited{$class});
 		my $method	= $attr->[1];
 		
 		# calls:  class->method( code, method, params );
 		$class->$method( $attr->[2], $attr->[1], $attr->[3]);
 	}
-	$init = 0;
+	$inited{$class}++; # Mark our caller class inited now, so that it can be skipped on next run
 }
 
 
