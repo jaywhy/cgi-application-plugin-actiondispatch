@@ -20,8 +20,11 @@ sub MODIFY_CODE_ATTRIBUTES {
 
 	foreach (@attrs) {
 		# Parse the attribute string ex: Regex('^/foo/bar/(\d+)/').
-		my($method, $params) = /^([a-z_]\w*)(?:[(](.*)[)])?$/is;
-		$params =~ s/(^'|'$)//g if defined $params;
+		my($method, $params) = /^(.*?)(?:\(\s*(.+?)\s*\))?$/;
+		
+    if (defined $params) {
+		  ($params =~ s/^'(.*)'$/$1/) || ($params =~ s/^"(.*)"/$1/)
+		}
 
 		# Attribute definition.
 		if($method eq 'ATTR') {

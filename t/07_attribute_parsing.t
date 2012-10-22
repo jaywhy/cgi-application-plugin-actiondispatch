@@ -3,7 +3,7 @@ use strict;
 
 use lib 't/';
 
-BEGIN { 
+BEGIN {
 	use_ok('CGI::Application');
 };
 
